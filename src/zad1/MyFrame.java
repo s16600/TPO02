@@ -159,7 +159,7 @@ public class MyFrame extends JFrame {
 						e1.printStackTrace();
 					}
 					
-					pogoda.setText("Pogoda:\n"+service.getWeather(city.getText()));
+					pogoda.setText("Pogoda:\n"+service.getWeatherText(city.getText()));
 					
 					loadMyURL("https://en.wikipedia.org/wiki/"+service.city);
 					

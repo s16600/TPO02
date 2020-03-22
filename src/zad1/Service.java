@@ -80,6 +80,20 @@ public class Service {
 
 	public String getWeather(String city) {
 		OpenWeatherMap myOwm = new OpenWeatherMap(OpenWeatherMap.Units.METRIC, "e1062b0ac1617d837933b2d9d1801f80");
+		
+		try {
+			CurrentWeather aktualnaPogoda = myOwm.currentWeatherByCityName(city);         		
+			if (aktualnaPogoda.hasBaseStation()) return aktualnaPogoda.getRawResponse();
+		} catch (IOException | JSONException e) {
+			
+		    e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public String getWeatherText(String city) {
+		OpenWeatherMap myOwm = new OpenWeatherMap(OpenWeatherMap.Units.METRIC, "e1062b0ac1617d837933b2d9d1801f80");
 		String weather = "";
 		
 		try {
@@ -100,7 +114,6 @@ public class Service {
 		
 		return weather;
 	}
-	
 	
     private Map<String, String> getCurrencies() {
         Locale[] myLocales = Locale.getAvailableLocales();
