@@ -80,16 +80,17 @@ public class MyFrame extends JFrame {
             @Override
             public void run() {
                 String tmp1 = convertToURL(url);
- 
                 if (tmp1 == null) {
                     tmp1 = convertToURL("http://" + url);
+                	//tmp1 = new URL("http://" + url).toExternalForm();
                 }
- 
+            	
                 engine.load(tmp1);
             }
         });
     }
-    
+
+
     private static String convertToURL(String str) {
         try {
             return new URL(str).toExternalForm();
@@ -97,6 +98,7 @@ public class MyFrame extends JFrame {
             return null;
         }
     }
+
     
 	public MyFrame(Service service) {
 		super("Informacje miejskie");
@@ -123,7 +125,7 @@ public class MyFrame extends JFrame {
 		panel.add(city,gbc);
 		
 		currency.setText("USD");
-		city.setPreferredSize(new Dimension(200,25));
+		currency.setPreferredSize(new Dimension(200,25));
 	    gbc.gridx=0; gbc.gridy=2; gbc.gridwidth = 1; 
 		panel.add(currency,gbc);
 		
