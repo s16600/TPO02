@@ -81,8 +81,17 @@ public class Service {
 	public String getWeather(String city) {
 		OpenWeatherMap myOwm = new OpenWeatherMap(OpenWeatherMap.Units.METRIC, "e1062b0ac1617d837933b2d9d1801f80");
 		
+		Map<String, String> isoKraje = new TreeMap<>();
 		try {
-			CurrentWeather aktualnaPogoda = myOwm.currentWeatherByCityName(city);         		
+			for (Locale locale : Locale.getAvailableLocales()) isoKraje.put(locale.getDisplayCountry(Locale.ENGLISH), locale.getCountry());
+		}
+		catch (Exception e) {
+			
+		}
+		
+		try {
+			//String myCity = "{cityName: \'"+city+" \'}";
+			CurrentWeather aktualnaPogoda = myOwm.currentWeatherByCityName(city, isoKraje.get(this.country));         		
 			if (aktualnaPogoda.hasBaseStation()) return aktualnaPogoda.getRawResponse();
 		} catch (IOException | JSONException e) {
 			
@@ -97,7 +106,19 @@ public class Service {
 		String weather = "";
 		
 		try {
-			CurrentWeather aktualnaPogoda = myOwm.currentWeatherByCityName(city);         
+
+			Map<String, String> isoKraje = new TreeMap<>();
+			try {
+				for (Locale locale : Locale.getAvailableLocales()) {
+					isoKraje.put(locale.getDisplayCountry(Locale.ENGLISH), locale.getCountry());
+					//System.out.println(locale.getDisplayCountry(Locale.ENGLISH) +", "+ locale.getCountry());
+				}
+			}
+			catch (Exception e) {
+				
+			}
+			
+			CurrentWeather aktualnaPogoda = myOwm.currentWeatherByCityName(city,isoKraje.get(this.country));         
 			
 			if (aktualnaPogoda.hasBaseStation()) {
 				JSONObject jsonObj = new JSONObject(aktualnaPogoda.getRawResponse());
